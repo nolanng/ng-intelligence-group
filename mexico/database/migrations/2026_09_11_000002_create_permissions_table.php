@@ -1,22 +1,19 @@
 <?php
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        DB::unprepared("
-            CREATE TABLE permissions (
-              id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-              name VARCHAR(150) NOT NULL,
-              slug VARCHAR(150) NOT NULL,
-              module VARCHAR(100) NULL,
-              created_at TIMESTAMP NULL,
-              updated_at TIMESTAMP NULL,
-              UNIQUE KEY uq_permissions_slug (slug)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        ");
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 150);
+            $table->string('slug', 150)->unique('uq_permissions_slug');
+            $table->string('module', 100)->nullable();
+            $table->timestamps();
+        });
     }
     public function down(): void {
-        DB::unprepared("DROP TABLE IF EXISTS permissions;");
+        Schema::dropIfExists('permissions');
     }
 };

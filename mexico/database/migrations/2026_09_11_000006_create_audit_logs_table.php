@@ -1,31 +1,26 @@
 <?php
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        DB::unprepared("
-            CREATE TABLE audit_logs (
-              id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-              user_id BIGINT UNSIGNED NULL,
-              event ENUM('LOGIN','LOGOUT','CREATE','UPDATE','DELETE','PUBLISH','UNPUBLISH','ROLE_CHANGE','SETTINGS_CHANGE','API_KEY_CHANGE','EXPORT') NOT NULL,
-              auditable_type VARCHAR(150) NULL,
-              auditable_id BIGINT UNSIGNED NULL,
-              route VARCHAR(255) NULL,
-              method VARCHAR(10) NULL,
-              ip_address VARCHAR(45) NULL,
-              user_agent VARCHAR(500) NULL,
-              old_values JSON NULL,
-              new_values JSON NULL,
-              created_at TIMESTAMP NULL,
-              KEY idx_audit_created (created_at),
-              KEY idx_audit_user (user_id),
-              KEY idx_audit_event (event),
-              CONSTRAINT fk_audit_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        ");
+        Schema::create('audit_logs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->enum('event', ['LOGIN','LOGOUT','CREATE','UPDATE','DELETE','PUBLISH','UNPUBLISH','ROLE_CHANGE','SETTINGS_CHANGE','API_KEY_CHANGE','EXPORT'])->index('idx_audit_event');
+            $table->string('auditable_type', 150)->nullable();
+            $table->unsignedBigInteger('auditable_id')->nullable();
+            $table->string('route', 255)->nullable();
+            $table->string('method', 10)->nullable();
+            $table->string('ip_address', 45)->nullable();
+            $table->string('user_agent', 500)->nullable();
+            $table->json('old_values')->nullable();
+            $table->json('new_values')->nullable();
+            $table->timestamp('created_at')->nullable()->index('idx_audit_created');
+        });
     }
     public function down(): void {
-        DB::unprepared("DROP TABLE IF EXISTS audit_logs;");
+        Schema::dropIfExists('audit_logs');
     }
 };

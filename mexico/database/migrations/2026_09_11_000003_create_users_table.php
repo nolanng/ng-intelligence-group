@@ -1,31 +1,27 @@
 <?php
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        DB::unprepared("
-            CREATE TABLE users (
-              id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-              name VARCHAR(150) NOT NULL,
-              email VARCHAR(190) NOT NULL,
-              password VARCHAR(255) NOT NULL,
-              status ENUM('active','inactive','suspended') NOT NULL DEFAULT 'active',
-              locale VARCHAR(10) NOT NULL DEFAULT 'es-MX',
-              timezone VARCHAR(60) NOT NULL DEFAULT 'America/Mexico_City',
-              email_verified_at TIMESTAMP NULL,
-              last_login_at TIMESTAMP NULL,
-              last_login_ip VARCHAR(45) NULL,
-              remember_token VARCHAR(100) NULL,
-              created_at TIMESTAMP NULL,
-              updated_at TIMESTAMP NULL,
-              deleted_at TIMESTAMP NULL,
-              UNIQUE KEY uq_users_email (email),
-              KEY idx_users_status (status)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        ");
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 150);
+            $table->string('email', 190)->unique('uq_users_email');
+            $table->string('password', 255);
+            $table->enum('status', ['active', 'inactive', 'suspended'])->default('active')->index('idx_users_status');
+            $table->string('locale', 10)->default('es-MX');
+            $table->string('timezone', 60)->default('America/Mexico_City');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('last_login_at')->nullable();
+            $table->string('last_login_ip', 45)->nullable();
+            $table->rememberToken();
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
     public function down(): void {
-        DB::unprepared("DROP TABLE IF EXISTS users;");
+        Schema::dropIfExists('users');
     }
 };

@@ -1,23 +1,19 @@
 <?php
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        DB::unprepared("
-            CREATE TABLE roles (
-              id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-              name VARCHAR(100) NOT NULL,
-              slug VARCHAR(100) NOT NULL,
-              description VARCHAR(255) NULL,
-              created_at TIMESTAMP NULL,
-              updated_at TIMESTAMP NULL,
-              UNIQUE KEY uq_roles_slug (slug)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-        ");
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 100);
+            $table->string('slug', 100)->unique('uq_roles_slug');
+            $table->string('description', 255)->nullable();
+            $table->timestamps();
+        });
     }
     public function down(): void {
-        DB::unprepared("DROP TABLE IF EXISTS roles;");
+        Schema::dropIfExists('roles');
     }
 };
