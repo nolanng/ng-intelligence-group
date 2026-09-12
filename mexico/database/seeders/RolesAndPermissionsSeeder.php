@@ -11,10 +11,10 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         // 1. Insert granular permissions
         $permissions = [
-            ['name' => 'View Users', 'slug' => 'view-users', 'module' => 'users', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Create Users', 'slug' => 'create-users', 'module' => 'users', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Edit Users', 'slug' => 'edit-users', 'module' => 'users', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Delete Users', 'slug' => 'delete-users', 'module' => 'users', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'View Users', 'slug' => 'users.view', 'module' => 'users', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Create Users', 'slug' => 'users.create', 'module' => 'users', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Edit Users', 'slug' => 'users.edit', 'module' => 'users', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Delete Users', 'slug' => 'users.delete', 'module' => 'users', 'created_at' => now(), 'updated_at' => now()],
         ];
 
         DB::table('permissions')->insertOrIgnore($permissions);
