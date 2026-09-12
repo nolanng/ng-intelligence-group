@@ -28,10 +28,10 @@ class ResetPasswordRequest extends FormRequest
                 'required',
                 'confirmed',
                 \Illuminate\Validation\Rules\Password::min(12)
-                    ->letters()
                     ->mixedCase()
                     ->numbers()
-                    ->symbols(),
+                    ->symbols()
+                    ->uncompromised(),
             ],
         ];
     }
