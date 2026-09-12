@@ -23,16 +23,29 @@ class RolesAndPermissionsSeeder extends Seeder
         $superAdmin = DB::table('roles')->where('slug', 'superadmin')->first();
         $admin = DB::table('roles')->where('slug', 'administrador')->first();
 
-        $allPermissions = DB::table('permissions')->pluck('id');
+        // Map permission slugs to IDs
+        $permissionsMap = DB::table('permissions')->pluck('id', 'slug')->toArray();
 
-        // 3. Associate all permissions to SuperAdmin and Administrador
+        // 3. Associate explicitly
         $pivotData = [];
-        foreach ($allPermissions as $permId) {
-            if ($superAdmin) {
-                $pivotData[] = ['role_id' => $superAdmin->id, 'permission_id' => $permId];
+
+        // SuperAdmin: users.view, users.create, users.edit, users.delete
+        if ($superAdmin) {
+            $superAdminPerms = ['users.view', 'users.create', 'users.edit', 'users.delete'];
+            foreach ($superAdminPerms as $slug) {
+                if (isset($permissionsMap[$slug])) {
+                    $pivotData[] = ['role_id' => $superAdmin->id, 'permission_id' => $permissionsMap[$slug]];
+                }
             }
-            if ($admin) {
-                $pivotData[] = ['role_id' => $admin->id, 'permission_id' => $permId];
+        }
+
+        // Administrador: users.view
+        if ($admin) {
+            $adminPerms = ['users.view'];
+            foreach ($adminPerms as $slug) {
+                if (isset($permissionsMap[$slug])) {
+                    $pivotData[] = ['role_id' => $admin->id, 'permission_id' => $permissionsMap[$slug]];
+                }
             }
         }
 
