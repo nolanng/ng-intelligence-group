@@ -15,13 +15,6 @@ return new class extends Migration {
               UNIQUE KEY uq_roles_slug (slug)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-            INSERT INTO roles (name, slug, created_at, updated_at) VALUES
-            ('SuperAdmin','superadmin', NOW(), NOW()),
-            ('Administrador','administrador', NOW(), NOW()),
-            ('Editor','editor', NOW(), NOW()),
-            ('Marketing','marketing', NOW(), NOW()),
-            ('Comercial','comercial', NOW(), NOW()),
-            ('Auditor','auditor', NOW(), NOW());
         ");
     }
     public function down(): void {

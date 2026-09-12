@@ -15,7 +15,7 @@ class AuthorizationTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->artisan('db:seed', ['--class' => 'RolesAndPermissionsSeeder']);
+        $this->artisan('db:seed');
     }
 
     public function test_editor_cannot_manage_users()
