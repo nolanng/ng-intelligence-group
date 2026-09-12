@@ -1,0 +1,70 @@
+COMANDOS DE GIT
+------------------------------------------------------------------
+cd C:\Users\nolan
+------------------------------------------------------------------
+git --version
+------------------------------------------------------------------
+git --help
+------------------------------------------------------------------
+limpiar consola cls
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+[-v | --version] 
+[-h | --help] 
+[-C <path>] 
+[-c <name>=<value>]
+[--exec-path[=<path>]] 
+[--html-path] 
+[--man-path] 
+[--info-path]
+[-p | --paginate | -P | --no-pager] 
+[--no-replace-objects] 
+[--no-lazy-fetch]
+[--no-optional-locks] 
+[--no-advice] [--bare] 
+[--git-dir=<path>]
+[--work-tree=<path>] 
+[--namespace=<name>] 
+[--config-env=<name>=<envvar>]
+
+
+
+
+
+
+
+VARIADO
+------------------------------------------------------------------
+git config --global user.email "nolan@portalcr.com"
+git config --global init.defaultBranch main
+git config --global core.autocrlf true
+ssh—keygen -t ed25519 —C "nolan@portalcr.com"
+ssh-add ~/.ssh/lJCwsGc8QQvlDdhFT8vyNDthtPf8oM0cyVUNJySSYTI nolan@portalcr.com
+/c/Users/nolan/.ssh/id_ed25519 (nolan@portalcr.com)
+C:\Users\nolan\.ssh\id_ed25519.pub | clip
+/c/Users/nolan/.ssh/id_ed25519 (nolan@portalcr.com)
+C:\Windows\System32>type C:
+type C:\Users\nolan\.ssh\id_ed25519.pub | clip
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICoS10nfWQZrB34K/jVyrBWTpK2wBnS/m/c+PHEmftRX nolan@portalcr.com
+ssh —T git@github.com
+FRASE: NG
+----------------------------------------------------------------------------------------
+
+The key fingerprint is:
+SHA256:lJCwsGc8QQvlDdhFT8vyNDthtPf8oM0cyVUNJySSYTI nolan@portalcr.com
+The key's randomart image is:
++--[ED25519 256]--+
+|  o=*++.E +o..+.+|
+|  .*.*.* B.. . +.|
+|  . O o % .   .  |
+|   o . * = + o   |
+|        S   B    |
+|         . = +   |
+|          . + .  |
+|                 |
+|                 |
++----[SHA256]-----+
