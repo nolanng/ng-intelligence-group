@@ -26,6 +26,12 @@ class ContentController extends Controller
         return response()->json($contents);
     }
 
+    public function show(Content $content)
+    {
+        \Illuminate\Support\Facades\Gate::authorize('view', $content);
+        return response()->json($content->load('sections'));
+    }
+
     public function store(StoreContentRequest $request)
     {
         \Illuminate\Support\Facades\Gate::authorize('create', Content::class);

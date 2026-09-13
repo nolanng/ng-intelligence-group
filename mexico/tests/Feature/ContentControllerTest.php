@@ -27,6 +27,20 @@ class ContentControllerTest extends TestCase
         $response->assertRedirect('/login'); // Expecting redirect to login
     }
 
+    public function test_editor_can_view_single_content()
+    {
+        $editorRole = Role::where('slug', 'editor')->first();
+        $editor = User::factory()->create();
+        $editor->roles()->attach($editorRole);
+
+        $content = Content::factory()->create();
+
+        $response = $this->actingAs($editor)->getJson("/contents/{$content->id}");
+        
+        $response->assertStatus(200);
+        $response->assertJsonPath('id', $content->id);
+    }
+
     public function test_editor_can_create_content()
     {
         $editorRole = Role::where('slug', 'editor')->first();
