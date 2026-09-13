@@ -28,7 +28,6 @@ Route::get('/reset-password/{token}', [PasswordResetController::class, 'showRese
 Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
 
 Route::middleware('auth')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/dashboard', function () {
         return view('dashboard'); // Assuming a dashboard view exists
     })->middleware('can:users.view');
