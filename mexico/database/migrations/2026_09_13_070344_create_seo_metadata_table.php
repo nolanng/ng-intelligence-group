@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('seo_metadata', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('content_id')->constrained('contents')->onDelete('cascade');
+            $table->foreignId('content_id')->unique()->constrained('contents')->onDelete('cascade');
             
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
