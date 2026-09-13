@@ -34,6 +34,23 @@ class StoreContentRequest extends FormRequest
             'is_featured' => ['boolean'],
             'parent_id' => ['nullable', 'exists:contents,id'],
             'featured_media_id' => ['nullable', 'integer'],
+            
+            'seo_metadata' => ['nullable', 'array'],
+            'seo_metadata.meta_title' => ['nullable', 'string', 'max:255'],
+            'seo_metadata.meta_description' => ['nullable', 'string'],
+            'seo_metadata.canonical_url' => ['nullable', 'url', 'max:255'],
+            'seo_metadata.robots_directive' => ['nullable', 'string', Rule::in(['index,follow', 'index,nofollow', 'noindex,follow', 'noindex,nofollow'])],
+            'seo_metadata.focus_keyword' => ['nullable', 'string', 'max:255'],
+            'seo_metadata.secondary_keywords' => ['nullable', 'string', 'max:255'],
+            'seo_metadata.og_title' => ['nullable', 'string', 'max:255'],
+            'seo_metadata.og_description' => ['nullable', 'string'],
+            'seo_metadata.og_image_id' => ['nullable', 'integer'],
+            'seo_metadata.twitter_card' => ['nullable', 'string', Rule::in(['summary', 'summary_large_image'])],
+            'seo_metadata.hreflang_group' => ['nullable', 'string', 'max:255'],
+            'seo_metadata.structured_data' => ['nullable', 'array'],
+            'seo_metadata.include_in_sitemap' => ['nullable', 'boolean'],
+            'seo_metadata.sitemap_priority' => ['nullable', 'numeric', 'min:0', 'max:1'],
+            'seo_metadata.sitemap_changefreq' => ['nullable', 'string', Rule::in(['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'])],
         ];
     }
 }

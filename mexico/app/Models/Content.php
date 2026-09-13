@@ -54,8 +54,13 @@ class Content extends Model
         return $this->hasMany(Content::class, 'parent_id');
     }
 
-    public function sections()
+    public function sections(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ContentSection::class)->orderBy('sort_order');
+    }
+
+    public function seoMetadata(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(SeoMetadata::class);
     }
 }

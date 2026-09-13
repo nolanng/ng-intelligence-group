@@ -36,20 +36,38 @@ class ContentController extends Controller
     {
         \Illuminate\Support\Facades\Gate::authorize('create', Content::class);
         $data = $request->validated();
+        $seoMetadata = $data['seo_metadata'] ?? null;
+        unset($data['seo_metadata']);
+        
         $data['author_id'] = $request->user()->id;
         $data['status'] = ContentStatus::DRAFT;
 
         $content = Content::create($data);
+        
+        if ($seoMetadata) {
+            $content->seoMetadata()->create($seoMetadata);
+        }
 
-        return response()->json($content, 201);
+        return response()->json($content->load('seoMetadata'), 201);
     }
 
     public function update(UpdateContentRequest $request, Content $content)
     {
         \Illuminate\Support\Facades\Gate::authorize('update', $content);
-        $content->update($request->validated());
+        $data = $request->validated();
+        $seoMetadata = $data['seo_metadata'] ?? null;
+        unset($data['seo_metadata']);
+        
+        $content->update($data);
+        
+        if ($seoMetadata !== null) {
+            $content->seoMetadata()->updateOrCreate(
+                ['content_id' => $content->id],
+                $seoMetadata
+            );
+        }
 
-        return response()->json($content);
+        return response()->json($content->load('seoMetadata'));
     }
 
     public function destroy(Content $content)
