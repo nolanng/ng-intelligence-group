@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('content_id')->constrained('contents')->onDelete('cascade');
             
-            $table->string('section_type');
+            $table->enum('section_type', ['hero', 'rich_text', 'benefits', 'features', 'stats', 'process', 'industry', 'video', 'faq', 'cta', 'resource', 'related_content', 'form']);
             $table->string('internal_name')->nullable();
             
             $table->string('heading')->nullable();

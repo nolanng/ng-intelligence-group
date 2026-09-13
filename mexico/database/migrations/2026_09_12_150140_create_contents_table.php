@@ -17,13 +17,13 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('contents')->onDelete('set null');
             $table->unsignedBigInteger('featured_media_id')->nullable();
             
-            $table->string('content_type');
+            $table->enum('content_type', ['page', 'solution', 'article', 'resource', 'case_study', 'video', 'faq', 'landing']);
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('excerpt')->nullable();
             $table->longText('body')->nullable();
             
-            $table->string('status')->default('draft');
+            $table->enum('status', ['draft', 'review', 'approved', 'scheduled', 'published', 'archived'])->default('draft');
             $table->string('template')->nullable();
             
             $table->string('locale')->default('es-MX');
