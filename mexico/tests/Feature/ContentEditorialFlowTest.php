@@ -42,6 +42,17 @@ class ContentEditorialFlowTest extends TestCase
         $this->assertEquals(ContentStatus::APPROVED, $content->fresh()->status);
     }
 
+    public function test_can_schedule_approved_content()
+    {
+        $content = Content::factory()->create(['status' => ContentStatus::APPROVED]);
+        $service = new ContentService();
+
+        $service->schedule($content, now()->addDays(2));
+
+        $this->assertEquals(ContentStatus::SCHEDULED, $content->fresh()->status);
+        $this->assertNotNull($content->fresh()->published_at);
+    }
+
     public function test_can_publish_approved_content()
     {
         $content = Content::factory()->create(['status' => ContentStatus::APPROVED]);

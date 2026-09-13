@@ -39,6 +39,25 @@ class ContentService
     }
 
     /**
+     * Schedule an approved content.
+     */
+    public function schedule(Content $content, \DateTimeInterface $publishAt): Content
+    {
+        if ($content->status !== ContentStatus::APPROVED) {
+            throw ValidationException::withMessages([
+                'status' => 'Solo contenidos aprobados pueden programarse.',
+            ]);
+        }
+
+        $content->update([
+            'status' => ContentStatus::SCHEDULED,
+            'published_at' => $publishAt,
+        ]);
+
+        return $content;
+    }
+
+    /**
      * Publish an approved content.
      */
     public function publish(Content $content): Content
