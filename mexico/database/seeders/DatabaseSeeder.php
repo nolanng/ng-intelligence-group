@@ -16,14 +16,22 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             RolesAndPermissionsSeeder::class,
-            SolutionSeeder::class,
         ]);
 
-        if (app()->environment('local')) {
-            User::factory()->create([
+        if (app()->environment('local', 'testing')) {
+            $user = User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'test@example.com',
             ]);
+            
+            $superAdminRole = \App\Models\Role::where('slug', 'superadmin')->first();
+            if ($superAdminRole) {
+                $user->roles()->attach($superAdminRole);
+            }
         }
+
+        $this->call([
+            SolutionSeeder::class,
+        ]);
     }
 }

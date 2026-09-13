@@ -33,7 +33,13 @@ class SolutionSeeder extends Seeder
         ];
 
         // Find a default author, e.g., superadmin or any user, or create one for seeder
-        $author = User::first() ?? User::factory()->create();
+        $author = User::whereHas('roles', fn($q) => $q->where('slug', 'superadmin'))->first();
+
+        if (!$author) {
+            throw new \RuntimeException(
+                'SolutionSeeder requiere que exista al menos un usuario con rol SuperAdmin antes de sembrar las soluciones. Crea un usuario administrador primero.'
+            );
+        }
 
         foreach ($solutions as $solutionName) {
             $slug = Str::slug($solutionName);
