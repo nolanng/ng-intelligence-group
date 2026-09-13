@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('author_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('parent_id')->nullable()->constrained('contents')->onDelete('set null');
-            $table->unsignedBigInteger('featured_media_id')->nullable();
+            $table->unsignedBigInteger('featured_media_id')->nullable(); // TODO: agregar constrained('media')->onDelete('set null') cuando se implemente la tabla media (sprint de Media Domain)
             
             $table->enum('content_type', ['page', 'solution', 'article', 'resource', 'case_study', 'video', 'faq', 'landing']);
             $table->string('title');
