@@ -64,21 +64,23 @@ class SolutionSeeder extends Seeder
 
             // Create Sections based on standard structure
             $sections = [
-                SectionType::HERO->value,
-                SectionType::RICH_TEXT->value, // Problema/Solución can be rich text or features
-                SectionType::BENEFITS->value,
-                SectionType::FEATURES->value,
-                SectionType::PROCESS->value, // Casos de uso / Proceso
-                SectionType::FAQ->value,
-                SectionType::VIDEO->value,
-                SectionType::FORM->value,
-                SectionType::CTA->value,
+                ['type' => SectionType::HERO->value, 'name' => 'Hero'],
+                ['type' => SectionType::RICH_TEXT->value, 'name' => 'Problema'],
+                ['type' => SectionType::RICH_TEXT->value, 'name' => 'Solución'],
+                ['type' => SectionType::BENEFITS->value, 'name' => 'Beneficios'],
+                ['type' => SectionType::FEATURES->value, 'name' => 'Características'],
+                ['type' => SectionType::RICH_TEXT->value, 'name' => 'Casos de uso'],
+                ['type' => SectionType::PROCESS->value, 'name' => 'Proceso'],
+                ['type' => SectionType::FAQ->value, 'name' => 'FAQ'],
+                ['type' => SectionType::VIDEO->value, 'name' => 'Video'],
+                ['type' => SectionType::FORM->value, 'name' => 'Formulario'],
+                ['type' => SectionType::CTA->value, 'name' => 'CTA'],
             ];
 
-            foreach ($sections as $index => $type) {
+            foreach ($sections as $index => $section) {
                 $content->sections()->create([
-                    'section_type' => $type,
-                    'internal_name' => "Sección " . ($index + 1) . " - " . ucfirst(str_replace('_', ' ', $type)),
+                    'section_type' => $section['type'],
+                    'internal_name' => "Sección " . ($index + 1) . " - " . $section['name'],
                     'content' => 'TODO: REQUIERE CONTENIDO APROBADO',
                     'sort_order' => $index + 1,
                     'is_active' => true,
