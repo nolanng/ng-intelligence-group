@@ -22,10 +22,13 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+use App\Http\Controllers\LeadController;
 use App\Http\Controllers\PasswordResetController;
 Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->middleware('throttle:10,1')->name('password.email');
 Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
+
+Route::post('/submissions', [LeadController::class, 'store'])->middleware('throttle:10,1');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
